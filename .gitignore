@@ -1,4 +1,10 @@
-.Rproj.user
-.Rhistory
+# R workspace
 .RData
-.Ruserdata
+.Rhistory
+.Rproj.user/
+
+# Raw and processed data
+data/raw/
+data/processed/
+
+

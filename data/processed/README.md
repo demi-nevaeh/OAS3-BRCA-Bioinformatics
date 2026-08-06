@@ -1,14 +1,5 @@
 # Processed Data
 
-This directory contains processed datasets generated from the preprocessing pipeline.
+This directory contains processed datasets generated during the analysis pipeline.
 
-Files in this directory are created by running:
-
-- 02_preprocessing.R
-
-Examples include:
-
-- expr_annotated.rds
-- pheno_clean.rds
-
-These files can be regenerated from the raw TCGA data.
+Large intermediate files are not included in this repository due to size limitations. Processed datasets can be recreated by running the scripts provided in the `scripts/` directory.
