@@ -30,9 +30,6 @@ query <- GDCquery(
 
 GDCdownload(query)
 
-library(TCGAbiolinks)
-library(SummarizedExperiment)
-
 # Prepare the downloaded data
 brca <- GDCprepare(query)
 
