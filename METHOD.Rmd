@@ -1,0 +1,194 @@
+---
+title: "METHOD"
+output: html_document
+---
+
+# Methods
+
+## Study Design
+
+This project is a breast cancer-specific computational analysis of **oligoadenylate synthetase 3 (OAS3)** using publicly available transcriptomic and clinical data from The Cancer Genome Atlas Breast Invasive Carcinoma (TCGA-BRCA) cohort.
+
+The analysis was designed as a focused extension of the previously published pan-cancer study by Zhang et al. (2026), *Pan-cancer multi-omics profiling of OAS3 reveals its immunological and prognostic associations across human cancers*. The original study investigated OAS3 across multiple cancer types, including its expression, prognostic associations, immune-related characteristics, and molecular pathways.
+
+The present analysis focuses specifically on breast cancer and evaluates OAS3 expression, tumor-versus-normal differences, overall survival, co-expression patterns, differential expression between OAS3 expression groups, and functional enrichment.
+
+## Data Sources
+
+### TCGA-BRCA Gene Expression Data
+
+RNA-seq gene expression data were obtained from the **UCSC Xena GDC TCGA Breast Cancer (BRCA)** cohort.
+
+The downloaded dataset was:
+
+* **Dataset:** TCGA-BRCA STAR-TPM
+* **Samples:** 1,226
+* **Gene identifiers:** 60,660
+* **Expression unit:** log2-transformed TPM
+* **Platform:** Illumina
+* **Data source:** Genomic Data Commons via UCSC Xena
+
+A GENCODE v36 gene annotation/probemap was used to map Ensembl gene identifiers to gene symbols and genomic annotations.
+
+### Clinical Phenotype Data
+
+TCGA-BRCA phenotype data were obtained from the UCSC Xena GDC cohort. The phenotype dataset contained 1,255 records and included demographic, diagnostic, tumor-stage, sample-type, and other clinical variables.
+
+Relevant variables included:
+
+* TCGA sample identifier
+* Sample type
+* Sex
+* Age at diagnosis/index
+* Vital status
+* AJCC pathological stage
+
+Expression samples were matched with phenotype records using the TCGA sample identifier.
+
+### Survival Data
+
+Overall survival data were obtained from the corresponding TCGA-BRCA survival dataset.
+
+The survival dataset included:
+
+* Sample identifier
+* Overall survival time (`OS.time`)
+* Overall survival event indicator (`OS`)
+* Patient identifier
+
+After matching expression and survival information, 1,203 samples were available for the survival analysis, including 197 observed events.
+
+## Data Preprocessing
+
+The TCGA-BRCA expression matrix was imported into R using the `readr` package.
+
+Ensembl gene identifiers were initially retained as the row identifiers. Gene annotation was subsequently incorporated using the GENCODE v36 probemap.
+
+The expression matrix was matched to available phenotype information using the TCGA sample identifier. A total of 1,226 expression samples had corresponding phenotype records.
+
+For tumor-versus-normal analysis, samples were classified according to their TCGA sample type.
+
+The matched expression cohort contained:
+
+* **Primary Tumor:** 1,106 samples
+* **Solid Tissue Normal:** 113 samples
+
+Metastatic samples were not included in the primary tumor-versus-normal comparison.
+
+## OAS3 Expression Analysis
+
+OAS3 was identified using the gene symbol **OAS3** corresponding to Ensembl identifier `ENSG00000111331`.
+
+OAS3 expression was compared between Primary Tumor and Solid Tissue Normal samples using the **Wilcoxon rank-sum test**.
+
+Expression was summarized using:
+
+* Median
+* Mean
+* Standard deviation
+
+The distribution of OAS3 expression across sample types was visualized graphically.
+
+## Survival Analysis
+
+Overall survival was evaluated using matched OAS3 expression and TCGA-BRCA survival information.
+
+Patients were divided into two groups according to OAS3 expression:
+
+* **OAS3-high**
+* **OAS3-low**
+
+The resulting groups contained 602 and 601 samples, respectively.
+
+Kaplan-Meier survival analysis was used to compare overall survival between the two OAS3 expression groups.
+
+A Cox proportional hazards regression model was subsequently fitted using OAS3 expression group as the explanatory variable.
+
+The analysis reported:
+
+* Hazard ratio (HR)
+* 95% confidence interval
+* P-value
+* Concordance
+
+## OAS3 Co-expression Analysis
+
+To investigate genes associated with OAS3 expression, gene-level correlations were calculated between OAS3 and genes across the TCGA-BRCA expression matrix.
+
+Genes were ranked according to their correlation coefficient with OAS3.
+
+OAS3 itself was excluded from the ranked list when identifying the strongest co-expressed genes.
+
+The top 30 positively co-expressed genes were retained for downstream visualization and interpretation.
+
+## Functional Enrichment of Co-expressed Genes
+
+Genes from the OAS3 co-expression analysis were converted from gene symbols to Entrez Gene identifiers using `org.Hs.eg.db`.
+
+Gene Ontology (GO) enrichment analysis was performed using the Biological Process (`BP`) ontology through the `clusterProfiler` package.
+
+KEGG pathway enrichment analysis was performed using the human KEGG database.
+
+These pathway annotations were interpreted in the context of shared host antiviral and interferon-related genes rather than as evidence of specific viral infection in the TCGA-BRCA tumors.
+
+## Differential Gene Expression Analysis
+
+To further investigate molecular differences associated with OAS3 expression, TCGA-BRCA samples were divided into OAS3-high and OAS3-low groups.
+
+Differential expression analysis was performed using the **limma** framework.
+
+Genes were considered significantly differentially expressed when they satisfied both criteria:
+
+```text
+Adjusted P-value < 0.05
+Absolute log2 fold change > 1
+```
+The differential expression results were visualized using a volcano plot.
+
+## GO and KEGG Enrichment of Differentially Expressed Genes
+
+Significantly differentially expressed genes were converted to Entrez Gene identifiers using `org.Hs.eg.db`.
+
+GO Biological Process enrichment analysis was performed using `clusterProfiler`.
+
+KEGG pathway enrichment analysis was also performed using the human KEGG database.
+
+## Visualization
+
+Results were visualized using R packages including `ggplot2` and `clusterProfiler`.
+
+Figures generated during the analysis included:
+
+* OAS3 tumor-versus-normal expression plots
+* Kaplan-Meier survival curves
+* OAS3 co-expression results
+* GO enrichment dot plots
+* GO enrichment bar plots
+* KEGG enrichment dot plots
+* KEGG enrichment bar plots
+* Differential expression volcano plots
+
+## Software
+
+All analyses were conducted in **R version 4.6.1** on Windows 10.
+
+Major packages used included:
+
+* `readr`
+* `dplyr`
+* `tibble`
+* `ggplot2`
+* `survival`
+* `survminer`
+* `limma`
+* `clusterProfiler`
+* `org.Hs.eg.db`
+* `TCGAbiolinks`
+
+## Reproducibility
+
+The repository contains the R scripts, figures, and summarized analysis outputs required to follow the computational workflow.
+
+Raw TCGA expression files are not included in the repository because of their large size. Users wishing to reproduce the analysis should obtain the corresponding datasets from the public UCSC Xena/GDC TCGA-BRCA cohort and place them in the designated `data/raw/` directory.
+
+The computational workflow and analysis outputs are provided for research and educational purposes.
