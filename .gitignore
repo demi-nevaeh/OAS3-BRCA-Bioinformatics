@@ -2,9 +2,7 @@
 .RData
 .Rhistory
 .Rproj.user/
-
 # Raw and processed data
 data/raw/
 data/processed/
-
-
+GDCdata/

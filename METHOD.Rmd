@@ -135,7 +135,7 @@ These pathway annotations were interpreted in the context of shared host antivir
 
 To further investigate molecular differences associated with OAS3 expression, TCGA-BRCA samples were divided into OAS3-high and OAS3-low groups.
 
-Differential expression analysis was performed using the **limma** framework.
+Differential expression analysis was performed using the limma framework.
 
 Genes were considered significantly differentially expressed when they satisfied both criteria:
 

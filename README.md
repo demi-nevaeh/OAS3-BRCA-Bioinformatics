@@ -344,4 +344,4 @@ This repository contains an independent computational analysis and should not be
 
 ## Disclaimer
 
-This project is intended for **research, educational, and bioinformatics portfolio purposes**. The findings should not be interpreted as clinical evidence or used for patient diagnosis, prognosis, or treatment decisions.
+This project is intended for research, educational, and bioinformatics portfolio purposes. The findings should not be interpreted as clinical evidence or used for patient diagnosis, prognosis, or treatment decisions.

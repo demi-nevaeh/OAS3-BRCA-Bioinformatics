@@ -113,7 +113,7 @@ KEGG enrichment identified pathways annotated with diseases such as:
 * Epstein-Barr virus infection
 * Herpes simplex virus 1 infection
 
-These results should **not** be interpreted as evidence that the TCGA-BRCA tumors are infected with these viruses.
+These results should not be interpreted as evidence that the TCGA-BRCA tumors are infected with these viruses.
 
 KEGG disease pathways frequently contain common host genes involved in interferon signaling and antiviral responses. The enrichment observed in this analysis is therefore more appropriately interpreted as evidence of activation of a **shared host antiviral/innate immune transcriptional program**.
 
